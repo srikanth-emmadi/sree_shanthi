@@ -61,8 +61,8 @@ function Dashboard() {
   const saveEdit = async () => {
     try {
       const endpoint = role === "admin"
-        ? `${API_URL}/api/users/${editingUser}`
-        : "${API_URL}/api/users/me";
+        ? `https://sree-shanthi.onrender.com/api/users/${editingUser}`
+        : "https://sree-shanthi.onrender.com/api/users/me";
 
       const data = await fetchJson(endpoint, {
         method: "PUT",
