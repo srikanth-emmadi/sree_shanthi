@@ -33,7 +33,7 @@ function Dashboard() {
   // ✅ Fetch notices
   useEffect(() => {
     if (!token) return;
-    fetchJson("http://localhost:5000/api/dashboard/notices", {
+    fetchJson("https://sree-shanthi.onrender.com/api/dashboard/notices", {
       headers: { Authorization: "Bearer " + token }
     }).then(setNotices).catch(err => console.error("❌ Notices error:", err.message));
   }, [token]);
@@ -41,7 +41,7 @@ function Dashboard() {
   // ✅ Fetch events
   useEffect(() => {
     if (!token) return;
-    fetchJson("http://localhost:5000/api/dashboard/events", {
+    fetchJson("https://sree-shanthi.onrender.com/api/dashboard/events", {
       headers: { Authorization: "Bearer " + token }
     }).then(setEvents).catch(err => console.error("❌ Events error:", err.message));
   }, [token]);
@@ -49,7 +49,7 @@ function Dashboard() {
   // ✅ Fetch users
   useEffect(() => {
     if (!token) return;
-    const url = role === "admin" ? "http://localhost:5000/api/users" : "http://localhost:5000/api/users/me";
+    const url = role === "admin" ? "https://sree-shanthi.onrender.com/api/users" : "https://sree-shanthi.onrender.com/api/users/me";
     fetchJson(url, { headers: { Authorization: "Bearer " + token } })
       .then(data => role === "admin" ? setUsers(data) : setUser(data))
       .catch(err => console.error("❌ Users error:", err.message));
@@ -61,8 +61,8 @@ function Dashboard() {
   const saveEdit = async () => {
     try {
       const endpoint = role === "admin"
-        ? `http://localhost:5000/api/users/${editingUser}`
-        : "http://localhost:5000/api/users/me";
+        ? `https://sree-shanthi.onrender.com/api/users/${editingUser}`
+        : "https://sree-shanthi.onrender.com/api/users/me";
 
       const data = await fetchJson(endpoint, {
         method: "PUT",
@@ -83,7 +83,7 @@ function Dashboard() {
   const deleteUser = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await fetchJson(`http://localhost:5000/api/users/${id}`, {
+      await fetchJson(`https://sree-shanthi.onrender.com/api/users/${id}`, {
         method: "DELETE",
         headers: { Authorization: "Bearer " + token }
       });
@@ -98,7 +98,7 @@ function Dashboard() {
 
   const addUser = async () => {
     try {
-      const data = await fetchJson("http://localhost:5000/api/users", {
+      const data = await fetchJson("https://sree-shanthi.onrender.com/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify(newUser)

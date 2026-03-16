@@ -7,7 +7,11 @@ const app = express();
 
 // ✅ Middleware
 app.use(express.json());
-app.use(cors());
+
+// Allow your Netlify URL to talk to this server
+app.use(cors({
+  origin: 'https://sree-shanthi-es.netlify.app' 
+}));
 
 // ✅ Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
