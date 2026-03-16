@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Dashboard.css";
-import { API_URL } from './config';
+import { API_URL } from '../config';
 
 function Dashboard() {
   const [notification, setNotification] = useState(null);
