@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Dashboard.css";
+import { API_URL } from './config';
 
 function Dashboard() {
   const [notification, setNotification] = useState(null);
@@ -33,7 +34,7 @@ function Dashboard() {
   // ✅ Fetch notices
   useEffect(() => {
     if (!token) return;
-    fetchJson("https://sree-shanthi.onrender.com/api/dashboard/notices", {
+    fetchJson("${API_URL}/api/dashboard/notices", {
       headers: { Authorization: "Bearer " + token }
     }).then(setNotices).catch(err => console.error("❌ Notices error:", err.message));
   }, [token]);
@@ -41,7 +42,7 @@ function Dashboard() {
   // ✅ Fetch events
   useEffect(() => {
     if (!token) return;
-    fetchJson("https://sree-shanthi.onrender.com/api/dashboard/events", {
+    fetchJson("${API_URL}/api/dashboard/events", {
       headers: { Authorization: "Bearer " + token }
     }).then(setEvents).catch(err => console.error("❌ Events error:", err.message));
   }, [token]);
@@ -49,7 +50,7 @@ function Dashboard() {
   // ✅ Fetch users
   useEffect(() => {
     if (!token) return;
-    const url = role === "admin" ? "https://sree-shanthi.onrender.com/api/users" : "https://sree-shanthi.onrender.com/api/users/me";
+    const url = role === "admin" ? "${API_URL}/api/users" : "${API_URL}/api/users/me";
     fetchJson(url, { headers: { Authorization: "Bearer " + token } })
       .then(data => role === "admin" ? setUsers(data) : setUser(data))
       .catch(err => console.error("❌ Users error:", err.message));
@@ -61,8 +62,8 @@ function Dashboard() {
   const saveEdit = async () => {
     try {
       const endpoint = role === "admin"
-        ? `https://sree-shanthi.onrender.com/api/users/${editingUser}`
-        : "https://sree-shanthi.onrender.com/api/users/me";
+        ? `${API_URL}/api/users/${editingUser}`
+        : "${API_URL}/api/users/me";
 
       const data = await fetchJson(endpoint, {
         method: "PUT",
@@ -83,7 +84,7 @@ function Dashboard() {
   const deleteUser = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await fetchJson(`https://sree-shanthi.onrender.com/api/users/${id}`, {
+      await fetchJson(`${API_URL}/api/users/${id}`, {
         method: "DELETE",
         headers: { Authorization: "Bearer " + token }
       });
@@ -98,7 +99,7 @@ function Dashboard() {
 
   const addUser = async () => {
     try {
-      const data = await fetchJson("https://sree-shanthi.onrender.com/api/users", {
+      const data = await fetchJson("${API_URL}/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify(newUser)
